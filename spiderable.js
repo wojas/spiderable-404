@@ -48,6 +48,14 @@ app.use(function (req, res, next) {
           "    return false;" +
           "  });" +
           "  if (ready) {" +
+          "    var response = page.evaluate(function() {" +
+          "        return Spiderable;" +
+          "    });" +
+          "    if(response.httpStatusCode != 200 " + 
+          "       || Object.keys(response.httpHeaders).length > 0) {" +
+          "      console.log('<!-- HTTP-RESPONSE:' + response.httpStatusCode + ' ' " +
+          "             + JSON.stringify(response.httpHeaders) + ' -->');" +
+          "    }" +
           "    var out = page.content;" +
           "    out = out.replace(/<script[^>]+>(.|\\n|\\r)*?<\\/script\\s*>/ig, '');" +
           "    out = out.replace('<meta name=\"fragment\" content=\"!\">', '');" +
@@ -76,7 +84,21 @@ app.use(function (req, res, next) {
       {timeout: REQUEST_TIMEOUT},
       function (error, stdout, stderr) {
         if (!error && /<html/i.test(stdout)) {
-          res.writeHead(200, {'Content-Type': 'text/html; charset=UTF-8'});
+          var match,
+              headers,
+              statusCode = 200,
+              responseRegexp = /^<!-- HTTP-RESPONSE:([0-9]+) ({.*}) -->\n/;
+          if(match = stdout.match(responseRegexp)) {
+            statusCode = parseInt(match[1]);
+            headers = JSON.parse(match[2]);
+            stdout = stdout.replace(responseRegexp, '');
+            if (!headers['Content-Type']) {
+              headers['Content-Type'] = 'text/html; charset=UTF-8';
+            }
+            res.writeHead(statusCode, headers);
+          } else {
+            res.writeHead(200, {'Content-Type': 'text/html; charset=UTF-8'});
+          }
           res.end(stdout);
         } else {
           // phantomjs failed. Don't send the error, instead send the

@@ -1,0 +1,28 @@
+<head>
+  <title>app</title>
+</head>
+
+<body>
+  <a href="/">Home</a>
+  <a href="/a">A</a>
+  <a href="/b">B</a>
+  <a href="/does-not-exist">does not exist</a>
+  <br />
+  {{renderPage}}
+</body>
+
+<template name="index">
+  <h1>Hello World!</h1>
+</template>
+
+<template name="a">
+  <h1>A</h1>
+</template>
+
+<template name="b">
+  <h1>B</h1>
+</template>
+
+<template name="notFound">
+  <h1>Page not found</h1>
+</template>
