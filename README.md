@@ -12,6 +12,8 @@ is undesirable, because this will cause search engines to index all your
 
 ## Example using meteor-router
 
+A demo of this package can be found at http://spiderable-404.meteor.com/
+
 In order to set the HTTP response code to be returned by spiderable-404,
 you have to assign it to the global `Spiderable.httpStatusCode` variable.
 It's possible to add extra response headers by assigning them to

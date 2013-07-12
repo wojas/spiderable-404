@@ -1,0 +1,8 @@
+{
+  "name": "spiderable-404",
+  "description": "Fork of Meteor's core spiderable package, with added support for status codes (like 404) and custom response headers.",
+  "homepage": "https://github.com/wojas/spiderable-404",
+  "author": "Konrad Wojas",
+  "version": "0.6.4.0",
+  "git": "https://github.com/wojas/spiderable-404.git"
+}
