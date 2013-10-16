@@ -3,6 +3,12 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
+  api.use('webapp', 'server');
+  api.use(['templating'], 'client');
+  api.use(['underscore'], ['client', 'server']);
+
+  api.export('Spiderable', ['client', 'server']);
+
   api.use(['templating'], 'client');
 
   api.add_files(['spiderable.html', 'client.js'], 'client');
