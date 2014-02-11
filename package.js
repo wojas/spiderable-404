@@ -9,8 +9,6 @@ Package.on_use(function (api) {
 
   api.export('Spiderable', ['client', 'server']);
 
-  api.use(['templating'], 'client');
-
   api.add_files(['spiderable.html', 'client.js'], 'client');
   api.add_files('spiderable.js', 'server');
 });
